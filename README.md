@@ -20,13 +20,21 @@ composer install
 
 ##### Setup database
 
-Create a new mysql database or sqlite and add config in .env
+Create a new mysql database and add config in .env
 
 Run command to setup table and generate data for project.
 
 ``
 php artisan migrate --seed
 ``
+
+### Start server demo
+
+```shell
+php artisan serve
+```
+
+Connect to test url: http://localhost:8000
 
 ### Test Api with swagger
 
@@ -51,13 +59,3 @@ Open this url to see document api:
 Use api login to get access_token and set this token in auth of Swagger document like:
 
 ``Bearer token``
-
-#### Unit test
-
-In root folder run command
-
-```ssh
-vendor\bin\phpunit.bat
-```
-
-If you wanna using coverage view you need install xdebug
