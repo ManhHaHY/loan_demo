@@ -1,0 +1,838 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Demo Loans System",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "/api/{version}",
+            "description": "Api for loans system",
+            "variables": {
+                "version": {
+                    "enum": [
+                        "v1"
+                    ],
+                    "default": "v1"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user to get token",
+                "description": "`user@example.com / 123456`",
+                "operationId": "99d66635c4992aeaa6aa44ff653d0563",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Create new user",
+                "description": "Create new user account for login",
+                "operationId": "67fd37db7cecd428148771f4e12fb15a",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/users"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/users"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout user",
+                "description": "Logout user",
+                "operationId": "6abf3b64a4bc7838d56346f05a5153af",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/loans/search": {
+            "post": {
+                "tags": [
+                    "Loan"
+                ],
+                "summary": "Get all loans",
+                "description": "Get all loans to list.",
+                "operationId": "1d391dddb9e9207978165710088f2ad9",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "minPrice": {
+                                        "description": "minPrice",
+                                        "type": "integer",
+                                        "example": "100"
+                                    },
+                                    "maxPrice": {
+                                        "description": "maxPrice",
+                                        "type": "integer",
+                                        "example": "10000"
+                                    },
+                                    "page": {
+                                        "description": "page",
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/loans": {
+            "post": {
+                "tags": [
+                    "Loan"
+                ],
+                "summary": "Create new loan",
+                "description": "Create new loan",
+                "operationId": "26018426d0b8b1e7b9128b5deccdbd8f",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/newloan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loan"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/loans/detail/{loanId}": {
+            "get": {
+                "tags": [
+                    "Loan"
+                ],
+                "summary": "Get loan detail",
+                "description": "Get loan detail given by its id",
+                "operationId": "334d7630ee6701b4c76fddcdb58e49a4",
+                "parameters": [
+                    {
+                        "name": "loanId",
+                        "in": "path",
+                        "description": "ID of loan need get info.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/loans/update/{loanId}": {
+            "put": {
+                "tags": [
+                    "Loan"
+                ],
+                "summary": "Update loan by id.",
+                "description": "Update loan by id.",
+                "operationId": "123f42df08dfc65b0a8cfd85f80b9b2f",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    },
+                    {
+                        "name": "loanId",
+                        "in": "path",
+                        "description": "ID of loan need update.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updateloan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loan"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/loans/approve": {
+            "patch": {
+                "tags": [
+                    "Loan"
+                ],
+                "summary": "Approve loan",
+                "description": "Approve loan",
+                "operationId": "aaecaf290485456b52b0b5154f60a512",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/loanapprove"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loanapprove"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/payment/list": {
+            "get": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Get list payments",
+                "operationId": "5d6780b6c4a330192be50a9b4ba37293",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "in": "query",
+                        "description": "Paginate with items.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of payments"
+                    },
+                    "401": {
+                        "description": "Unauthorize."
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/payment/create": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Create payment for Loan",
+                "description": "Create payment for Loan",
+                "operationId": "ae56ba49fd7adc3275301a3a1b298f3c",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/payment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/payment/detail/{paymentId}": {
+            "get": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Get Payment Detail",
+                "operationId": "e2ec66be6776b3e2983ad0ed1bed4665",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    },
+                    {
+                        "name": "paymentId",
+                        "in": "path",
+                        "description": "Payment Id.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of service provider"
+                    },
+                    "401": {
+                        "description": "Unauthorize."
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/payment/approve": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Approve payment",
+                "description": "Approve payment",
+                "operationId": "61a6c3206cee8df724790dc8ff74ad02",
+                "parameters": [
+                    {
+                        "name": "X-Requested-With",
+                        "in": "header",
+                        "description": "Request Header",
+                        "schema": {
+                            "type": "string",
+                            "default": "XMLHttpRequest"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/payment_approve"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "402": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "loan": {
+                "title": "Loan Model",
+                "properties": {
+                    "amount": {
+                        "schema": "Loan",
+                        "description": "amount borrowed",
+                        "type": "integer",
+                        "example": "1000"
+                    },
+                    "amount_to_pay": {
+                        "schema": "Loan",
+                        "description": "amount to pay",
+                        "type": "float",
+                        "example": "1000"
+                    },
+                    "interest": {
+                        "schema": "Loan",
+                        "description": "interest",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "duration": {
+                        "schema": "Loan",
+                        "description": "duration",
+                        "type": "integer",
+                        "example": "15"
+                    },
+                    "date_applied": {
+                        "schema": "Loan",
+                        "description": "date_applied",
+                        "type": "date",
+                        "example": "2021-10-16"
+                    },
+                    "date_loan_ends": {
+                        "schema": "Loan",
+                        "description": "date_loan_ends",
+                        "type": "date",
+                        "example": "2021-11-30"
+                    }
+                },
+                "type": "object"
+            },
+            "newloan": {
+                "title": "New loan",
+                "allOf": [
+                    {
+                        "properties": {
+                            "user_id": {
+                                "description": "customer id",
+                                "type": "integer",
+                                "example": "1"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "$ref": "#/components/schemas/loan"
+                    }
+                ]
+            },
+            "updateloan": {
+                "title": "Update loan",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/loan"
+                    }
+                ]
+            },
+            "loanapprove": {
+                "title": "Loan approve",
+                "allOf": [
+                    {
+                        "properties": {
+                            "loan_id": {
+                                "description": "Loan id",
+                                "type": "integer",
+                                "example": "1"
+                            },
+                            "approved": {
+                                "description": "true | false",
+                                "type": "boolean",
+                                "example": "true"
+                            },
+                            "approved_date": {
+                                "description": "approved_date",
+                                "type": "date",
+                                "example": "2021-10-16"
+                            },
+                            "payment_date": {
+                                "description": "payment_date",
+                                "type": "date",
+                                "example": "2021-11-16"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "payment": {
+                "title": "Payment Model",
+                "properties": {
+                    "loan_id": {
+                        "schema": "Payment",
+                        "description": "loan_id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "amount": {
+                        "schema": "Payment",
+                        "description": "amount",
+                        "type": "float",
+                        "example": "10.00"
+                    },
+                    "payment_mode": {
+                        "schema": "Payment",
+                        "description": "payment_mode",
+                        "type": "string",
+                        "example": "paid"
+                    },
+                    "description": {
+                        "schema": "Payment",
+                        "description": "description",
+                        "type": "string",
+                        "example": "description"
+                    }
+                },
+                "type": "object"
+            },
+            "payment_approve": {
+                "title": "Payment approve Model",
+                "allOf": [
+                    {
+                        "properties": {
+                            "id": {
+                                "description": "payment id",
+                                "type": "integer",
+                                "example": "1"
+                            },
+                            "loan_id": {
+                                "description": "loan id",
+                                "type": "integer",
+                                "example": "1"
+                            },
+                            "status": {
+                                "description": "status",
+                                "type": "integer",
+                                "default": 1,
+                                "enum": [
+                                    0,
+                                    1
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "users": {
+                "title": "User Model",
+                "properties": {
+                    "first_name": {
+                        "schema": "User",
+                        "description": "First Name",
+                        "type": "string",
+                        "example": "UserRepo"
+                    },
+                    "last_name": {
+                        "schema": "User",
+                        "description": "Last Name",
+                        "type": "string",
+                        "example": "A"
+                    },
+                    "email": {
+                        "schema": "User",
+                        "description": "Email address",
+                        "type": "string",
+                        "example": "user1@email.com"
+                    },
+                    "password": {
+                        "schema": "User",
+                        "description": "password",
+                        "type": "string",
+                        "example": "123321"
+                    },
+                    "personal_code": {
+                        "schema": "User",
+                        "description": "0123456789",
+                        "type": "string",
+                        "example": "0123456789"
+                    },
+                    "phone": {
+                        "schema": "User",
+                        "description": "0912345678",
+                        "type": "string",
+                        "example": "0912345678"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Authorization": {
+                "type": "apiKey",
+                "description": "Header value: `Bearer {access_token}`",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Api using for Auth"
+        },
+        {
+            "name": "Auth",
+            "description": "Api using for Auth"
+        },
+        {
+            "name": "Loan",
+            "description": "Api using for Loan"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
